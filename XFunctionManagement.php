@@ -22,46 +22,35 @@
 			$this->_network = $_network;
 		}
 
+		// TODO: get class name for better handling XVersionManagement
 		public static function className() {
 			return get_class();
 		}
 
+		// TODO: debugging lambda function
 		public function __debugging($_debugging_function) {
 			// TODO: check if debugging is active
 			if ( $this->_debugging )
 				$_debugging_function();
 		}
 
-		// TODO: get class name for better handling XVersionManagement
+		// TODO: initialization lambda function for manage data
 		public function __initialization($lambda_function) {
 			$lambda_function();
 		}
 
-		// TODO: debugging lambda function
-		public function get() {
-			$query = sprintf(
-				"select * from %s",
-				TB_TEST::$TB
-			);
-
-			$data = $this->_database()->db()->query($query)->fetchAll(PDO::FETCH_ASSOC);
-
-			XLog::log(
-				array(
-					'status' => true,
-					"data" => $data
-				)
-			);
-		}
-
-		// TODO: initialization lambda function for manage data
 		private function _database() {
 			return new XDatabaseManagement();
+		}
+
+		private function _calender() {
+			return new XCalenderManagement();
 		}
 
 		//===================================================================================================
 		//===================================================================================================
 		// TODO: define all api function
+
 		public function add() {
 			$value = "Hello World!";
 			$data = $this->_database()->db()->prepare(
@@ -90,11 +79,21 @@
 		}
 
 		//===================================================================================================
+		public function get() {
+			$query = sprintf(
+				"select * from %s",
+				TB_TEST::$TB
+			);
 
-		private function _calender() {
-			return new XCalenderManagement();
+			$data = $this->_database()->db()->query($query)->fetchAll(PDO::FETCH_ASSOC);
+
+			XLog::log(
+				array(
+					'status' => true,
+					"data" => $data
+				)
+			);
 		}
-
 	}
 
 ?>
